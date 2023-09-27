@@ -1,0 +1,58 @@
+{% extends "quotes/base.html" %}
+
+{% block content %}
+
+<form method="POST">
+    {% csrf_token %}
+
+    {% for error in form.non_field_errors %}
+    <div class="alert alert-danger" role="alert">
+        {{ error }}
+    </div>
+    {% endfor %}
+
+    <div class="mb-3">
+        <label for="fullname" class="form-label">Fullname</label>
+        {{ form.fullname }}
+        {% if form.errors.fullname %}
+        <div class="alert alert-danger" role="alert">
+            {{ form.errors.fullname }}
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="mb-3">
+        <label for="born_location" class="form-label">Born location</label>
+        {{ form.born_location }}
+        {% if form.errors.born_location %}
+        <div class="alert alert-danger" role="alert">
+            {{ form.errors.born_location }}
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        {{ form.description }}
+        {% if form.errors.description %}
+        <div class="alert alert-danger" role="alert">
+            {{ form.errors.description }}
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="mb-3">
+        <label for="born_date" class="form-label">Born date</label>
+        {{ form.born_date }}
+        {% if form.errors.born_date %}
+        <div class="alert alert-danger" role="alert">
+            {{ form.errors.born_date }}
+        </div>
+        {% endif %}
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-block">Add author</button>
+</form>
+
+{% endblock %}
+

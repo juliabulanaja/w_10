@@ -1,0 +1,50 @@
+{% extends "quotes/base.html" %}
+
+{% block content %}
+
+<form method="POST">
+    {% csrf_token %}
+    {% for error in form.non_field_errors %}
+    <div class="alert alert-danger" role="alert">
+        {{ error }}
+    </div>
+    {% endfor %}
+
+
+    <div class="mb-3">
+        <label for="quote" class="form-label">Quote</label>
+        {{ form.quote }}
+        {% if form.errors.quote %}
+        <div class="alert alert-danger" role="alert">
+            {{ form.errors.quote }}
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="mb-3">
+        <label for="author" class="form-label">Author</label>
+        {{ form.author }}
+        {% if form.errors.author %}
+        <div class="alert alert-danger" role="alert">
+            {{ form.errors.author }}
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Tags</label>
+        <select class="form-select" multiple size="3" name="tags" aria-label="Default select example">
+            <option selected value> -- select tags --</option>
+            {% for tag in tags %}
+            <option value="{{ tag }}">{{ tag }}</option>
+            {% endfor %}
+        </select>
+
+    </div>
+
+
+    <button type="submit" class="btn btn-primary btn-block">Add quote</button>
+</form>
+
+{% endblock %}
+

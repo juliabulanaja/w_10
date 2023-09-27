@@ -1,0 +1,48 @@
+{% extends "quotes/base.html" %}
+
+{% block content %}
+  <form method="POST">
+    {% csrf_token %}
+
+    {% for error in form.non_field_errors %}
+      <div class="alert alert-danger" role="alert">
+          {{ error }}
+        </div>
+    {% endfor %}
+
+    <div class="form-outline mb-4">
+      <label class="form-label"><div>Email address:</div>
+        {% if form.errors.username %}
+        <div class="alert alert-danger" role="alert">
+          {{ form.errors.username }}
+        </div>
+        {% endif %}
+        {{ form.username }}
+      </label>
+    </div>
+
+    <div class="form-outline mb-4">
+      <label class="form-label"><div>Password:</div>
+        {% if form.errors.password1 %}
+        <div class="alert alert-danger" role="alert">
+          {{ form.errors.password1 }}
+        </div>
+        {% endif %}
+        {{ form.password1 }}
+      </label>
+    </div>
+
+    <div class="form-outline mb-4">
+      <label class="form-label"><div>Repeat Password:</div>
+        {% if form.errors.password2 %}
+        <div class="alert alert-danger" role="alert">
+          {{ form.errors.password2 }}
+        </div>
+        {% endif %}
+        {{ form.password2 }}
+      </label>
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-block">Sign up</button>
+  </form>
+{% endblock %}

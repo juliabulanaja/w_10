@@ -1,0 +1,28 @@
+{% extends "quotes/base.html" %}
+
+{% block content %}
+
+<form method="POST">
+    {% csrf_token %}
+
+    {% for error in form.non_field_errors %}
+    <div class="alert alert-danger" role="alert">
+        {{ error }}
+    </div>
+    {% endfor %}
+
+    <div class="mb-3">
+        <label for="name" class="form-label">Tag name</label>
+        {{ form.name }}
+        {% if form.errors.name %}
+        <div class="alert alert-danger" role="alert">
+            {{ form.errors.name }}
+        </div>
+        {% endif %}
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-block">Add tag</button>
+</form>
+
+{% endblock %}
+

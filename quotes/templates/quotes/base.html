@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    {% block styles %}
+    {% endblock %}
+    <title>Title</title>
+</head>
+<body>
+
+<ul class="nav">
+
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'quotes:main' %}">Home</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'quotes:popular_quotes' %}">Popular quotes</a>
+    </li>
+
+    {% if not user.is_authenticated %}
+
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'users:signup' %}">Signup</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'users:signin' %}">Signin</a>
+    </li>
+
+    {% else %}
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'quotes:add_author' %}">Add author</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'quotes:add_tag' %}">Add tag</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'quotes:add_quote' %}">Add quote</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'users:logout' %}">Logout</a>
+    </li>
+    {% endif %}
+</ul>
+
+
+<div class="container m-3">
+    {% block content %}
+    {% endblock %}
+</div>
+
+</body>
+</html>
