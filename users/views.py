@@ -2,8 +2,12 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views import View
 from django.contrib.auth import authenticate, login, logout
-from .forms import RegisterForm, LoginForm
 from django.contrib import messages
+from django.urls import reverse_lazy
+from django.contrib.auth.views import PasswordResetView
+from django.contrib.messages.views import SuccessMessageMixin
+
+from .forms import RegisterForm, LoginForm
 
 
 class Signup(View):
@@ -21,13 +25,13 @@ class Signup(View):
 
     def post(self, request):
 
-        if not request.user.is_authenticated:
+        if request.user.is_authenticated:
             return redirect(to='quotes:main')
 
         form = RegisterForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponse(666)
+            return redirect(to='users:signin')
 
         context = {
             "form": form,
@@ -39,7 +43,7 @@ class Signin(View):
 
     def get(self, request):
 
-        if not request.user.is_authenticated:
+        if request.user.is_authenticated:
             return redirect(to='quotes:main')
 
         form = LoginForm()
@@ -50,7 +54,7 @@ class Signin(View):
 
     def post(self, request):
 
-        if not request.user.is_authenticated:
+        if request.user.is_authenticated:
             return redirect(to='quotes:main')
 
         username = request.POST['username']
@@ -58,11 +62,13 @@ class Signin(View):
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
+            print("no error")
             login(request, user)
             return redirect('/')
         else:
             form = LoginForm()
             messages.error(request, 'Username or password didn\'t match')
+            print("error!!!!")
             return render(request, 'users/signin.html', {'form': form})
 
 
@@ -70,5 +76,14 @@ class Logout(View):
 
     def get(self, request):
         logout(request)
-        return redirect(to='noteapp:main')
+        return redirect(to='quotes:main')
+
+
+class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
+    template_name = 'users/password_reset.html'
+    email_template_name = 'users/password_reset_email.html'
+    html_email_template_name = 'users/password_reset_email.html'
+    success_url = reverse_lazy('users:password_reset_done')
+    success_message = "An email with instructions to reset your password has been sent to %(email)s."
+    subject_template_name = 'users/password_reset_subject.txt'
 

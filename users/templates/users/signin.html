@@ -14,7 +14,7 @@
       </div>
       {% endif %}
 
-      <label class="form-label"><div>Email address:</div>
+      <label class="form-label"><div>Login:</div>
         {% if form.errors.username %}
         <div class="alert alert-danger" role="alert">
           {{ form.errors.username }}
@@ -24,7 +24,7 @@
       </label>
     </div>
 
-    <div class="form-outline mb-4">
+    <div class="form-outline">
       <label class="form-label"><div>Password:</div>
         {% if form.errors.password %}
         <div class="alert alert-danger" role="alert">
@@ -34,6 +34,9 @@
         {{ form.password }}
       </label>
     </div>
+
+    <div class="form-outline mb-4"><small><a href="{% url 'users:password_reset' %}">Forgot your password?</a></small></div>
+
 
     <button type="submit" class="btn btn-primary btn-block">Sign up</button>
   </form>

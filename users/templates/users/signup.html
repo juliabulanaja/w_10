@@ -11,13 +11,24 @@
     {% endfor %}
 
     <div class="form-outline mb-4">
-      <label class="form-label"><div>Email address:</div>
+      <label class="form-label"><div>Login:</div>
         {% if form.errors.username %}
         <div class="alert alert-danger" role="alert">
           {{ form.errors.username }}
         </div>
         {% endif %}
         {{ form.username }}
+      </label>
+    </div>
+
+    <div class="form-outline mb-4">
+      <label class="form-label"><div>Email:</div>
+        {% if form.errors.email %}
+        <div class="alert alert-danger" role="alert">
+          {{ form.errors.email }}
+        </div>
+        {% endif %}
+        {{ form.email }}
       </label>
     </div>
 
